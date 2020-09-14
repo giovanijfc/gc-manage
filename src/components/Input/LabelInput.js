@@ -7,7 +7,7 @@ import COLORS from "styles-guide/COLORS";
 
 const LabelInput = ({ children, ...props }) => (
   <Container>
-    <Text size="small" color={COLORS.gray["900"]} fontWeight="bold" {...props}>
+    <Text size="small" color={COLORS.gray["500"]} fontWeight="bold" {...props}>
       {children}
     </Text>
   </Container>

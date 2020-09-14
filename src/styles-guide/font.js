@@ -21,37 +21,37 @@ export const getFontSize = (size = "default") => {
   }
 };
 
-export const getFontWeight = (fontWeight) => {
-  switch ((fontWeight = "default")) {
+export const getFontWeight = (fontWeight = "default") => {
+  switch (fontWeight) {
     case "light":
       return {
         "font-weight": 100,
-        //"font-family": "Sofia Light",
+        "font-family": "Sofia Light",
       };
     case "regular":
       return {
         "font-weight": 300,
-        //"font-family": "Sofia Regular",
+        "font-family": "Sofia Regular",
       };
     case "medium":
       return {
         "font-weight": 500,
-        //"font-family": "Sofia Medium",
+        "font-family": "Sofia Medium",
       };
     case "semiBold":
       return {
         "font-weight": 700,
-        //"font-family": "Sofia Semi Bold",
+        "font-family": "Sofia Semi Bold",
       };
     case "bold":
       return {
         "font-weight": 900,
-        //"font-family": "Sofia Bold",
+        "font-family": "Sofia Bold",
       };
     default:
       return {
         "font-weight": 100,
-        //"font-family": "Sofia Light",
+        "font-family": "Sofia Light",
       };
   }
 };

@@ -38,6 +38,7 @@ const LoginForm = () => {
         <Text
           style={{ marginRight: SPACING.small }}
           size="small"
+          fontWeight="regular"
           color={COLORS.gray["500"]}
         >
           Ainda não tem uma conta?
@@ -57,7 +58,7 @@ const LoginForm = () => {
         >
           Entre em GCMS
         </Text>
-        <Text color={COLORS.gray["500"]} size="small" fontWeight="light">
+        <Text color={COLORS.gray["500"]} size="small" fontWeight="regular">
           Insira seus dados de login abaixo.
         </Text>
 
@@ -82,7 +83,7 @@ const LoginForm = () => {
         >
           <WrapperRow>
             <LabelInput>PASSWORD</LabelInput>
-            <TextForgotPassword color="black" size="small">
+            <TextForgotPassword fontWeight="regular" color="black" size="small">
               Esqueceu sua senha?
             </TextForgotPassword>
           </WrapperRow>

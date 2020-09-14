@@ -19,7 +19,7 @@ const ErrorTextInput = ({ children, ...props }) => {
             <Text
               size="small"
               color={COLORS.error}
-              fontWeight="bold"
+              fontWeight="regular"
               {...props}
             >
               {children}
