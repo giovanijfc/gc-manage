@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
 
+import Button from "components/Button";
 import Text from "components/Text";
-
 import {
   ControlInput,
   Input,
@@ -68,7 +68,7 @@ const LoginForm = () => {
           <ErrorTextInput>{errors.password?.message}</ErrorTextInput>
         </ControlInput>
 
-        <input type="submit" />
+        <Button type="submit" />
       </StyledForm>
     </Container>
   );
