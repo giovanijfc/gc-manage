@@ -1,7 +1,9 @@
 import React from "react";
 
+import * as Styled from "./styles";
+
 const LoginScreen = () => {
-  return <div>LOGIN SCREEN</div>;
+  return <Styled.Container>Tela de Login</Styled.Container>;
 };
 
 export default LoginScreen;
