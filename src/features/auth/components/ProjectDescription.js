@@ -35,6 +35,14 @@ const ProjectDescription = () => {
             qualquer négocio!
           </Text>
         </WrapperDescription>
+
+        <Text
+          style={{ position: "absolute", bottom: 20 }}
+          size="small"
+          color={COLORS.gray["400"]}
+        >
+          Versão 1.12.0
+        </Text>
       </Overlay>
     </Container>
   );

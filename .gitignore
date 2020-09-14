@@ -12,7 +12,6 @@
 /build
 /release-builds
 /dist
-/public
 
 # misc
 .DS_Store
