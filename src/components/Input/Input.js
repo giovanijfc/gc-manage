@@ -15,7 +15,7 @@ const Input = forwardRef(
     const { isFocused, setIsFocused } = useContext(ControlInputContext);
 
     return (
-      <Container>
+      <Container isFocused={isFocused}>
         {renderLeft}
         <StyledInput
           ref={ref}
@@ -35,24 +35,40 @@ const Input = forwardRef(
 
 const Container = styled.div`
   display: flex;
-`;
-
-const StyledInput = styled.input`
-  flex: 1;
-  background-color: ${COLORS.gray["200"]};
+  align-items: center;
+  justify-content: center;
   padding: 12px;
-  font-size: ${({ size }) => getFontSize(size)};
-  color: ${({ color }) => color};
-  font-weight: ${({ fontWeight }) => getFontWeight(fontWeight)};
-  border: 1px solid ${COLORS.gray["700"]};
+  background-color: ${COLORS.gray["200"]};
+  border: 2px solid ${COLORS.gray["300"]};
   border-radius: 2px;
-  outline: 0;
 
   ${({ isFocused }) => {
     if (isFocused) {
       return {
         "background-color": COLORS.white,
-        border: `1px solid ${COLORS.blueLight}`,
+        border: `2px solid ${COLORS.blueLight}`,
+      };
+    }
+
+    return null;
+  }}
+`;
+
+const StyledInput = styled.input`
+  flex: 1;
+  margin-left: 7px;
+  margin-right: 7px;
+  font-size: ${({ size }) => getFontSize(size)};
+  color: ${({ color }) => color};
+  font-weight: ${({ fontWeight }) => getFontWeight(fontWeight)};
+  background-color: ${COLORS.gray["200"]};
+  outline: 0;
+  border: 0;
+
+  ${({ isFocused }) => {
+    if (isFocused) {
+      return {
+        "background-color": COLORS.white,
       };
     }
 

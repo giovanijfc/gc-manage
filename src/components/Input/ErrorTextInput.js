@@ -32,7 +32,7 @@ const ErrorTextInput = ({ children, ...props }) => {
 };
 
 const Container = styled.div`
-  height: 2px;
+  height: 23px;
 `;
 
 const WrapperAnimation = styled.div`
@@ -44,7 +44,7 @@ const transitionStyles = {
   entered: {
     opacity: 1,
     transform: "translateY(0px)",
-    transition: "opacity 300ms, transform 300ms",
+    transition: "opacity 200ms, transform 200ms",
   },
   exiting: { opacity: 1 },
   exited: {

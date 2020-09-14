@@ -16,11 +16,14 @@ import {
 import COLORS from "styles-guide/COLORS";
 import SPACING from "styles-guide/SPACING";
 
+import { MdEmail } from "react-icons/md";
+import { IoIosKey } from "react-icons/io";
+
 const schema = yup.object().shape({
   email: yup.string().email("Email incorreto.").required("Email obrigatório."),
   password: yup
     .string()
-    .min("Mínimo de 6 dígitos para a senha.")
+    .min(6, "Mínimo de 6 dígitos para a senha.")
     .required("Senha obrigatória"),
 });
 
@@ -31,44 +34,77 @@ const LoginForm = () => {
 
   return (
     <Container>
-      <Text style={{ marginLeft: "-3px" }} size="high" fontWeight="bold">
-        Entre em GCMS
-      </Text>
-      <Text color={COLORS.gray["500"]} size="small" fontWeight="light">
-        Insira seus dados de login abaixo.
-      </Text>
+      <CreateAccountArea>
+        <Text
+          style={{ marginRight: SPACING.small }}
+          size="small"
+          color={COLORS.gray["500"]}
+        >
+          Ainda não tem uma conta?
+        </Text>
+        <Button typeStyle="ghost">CRIAR UMA CONTA</Button>
+      </CreateAccountArea>
 
       <StyledForm
         onSubmit={handleSubmit((data) => {
           console.log(data);
         })}
       >
-        <ControlInput isValid={!errors.email?.message}>
+        <Text
+          style={{ marginLeft: "-3px", marginBottom: "6px" }}
+          size="high"
+          fontWeight="bold"
+        >
+          Entre em GCMS
+        </Text>
+        <Text color={COLORS.gray["500"]} size="small" fontWeight="light">
+          Insira seus dados de login abaixo.
+        </Text>
+
+        <ControlInput
+          style={{ marginTop: SPACING.medium }}
+          isValid={!errors.email?.message}
+        >
           <LabelInput>EMAIL</LabelInput>
           <Input
             ref={register}
             name="email"
             size="small"
             placeholder="exemplo@exemplo.com"
+            renderLeft={<MdEmail size="23px" color={COLORS.primary} />}
           />
           <ErrorTextInput>{errors.email?.message}</ErrorTextInput>
         </ControlInput>
 
         <ControlInput
-          style={{ marginTop: SPACING.small }}
+          style={{ marginTop: "3px" }}
           isValid={!errors.password?.message}
         >
-          <LabelInput>PASSWORD</LabelInput>
+          <WrapperRow>
+            <LabelInput>PASSWORD</LabelInput>
+            <TextForgotPassword color="black" size="small">
+              Esqueceu sua senha?
+            </TextForgotPassword>
+          </WrapperRow>
           <Input
             ref={register}
             name="password"
             size="small"
-            placeholder="*********"
+            placeholder="Digite sua senha..."
+            renderLeft={<IoIosKey size="23px" color={COLORS.primary} />}
           />
           <ErrorTextInput>{errors.password?.message}</ErrorTextInput>
         </ControlInput>
 
-        <Button type="submit" />
+        <Button
+          propsContainer={{
+            style: { width: "50%", marginTop: SPACING.small },
+          }}
+          typeStyle="default"
+          type="submit"
+        >
+          Entrar
+        </Button>
       </StyledForm>
     </Container>
   );
@@ -78,15 +114,36 @@ const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-left: 60px;
+  margin-left: 80px;
 `;
 
 const StyledForm = styled.form`
+  flex: 1;
   width: 28%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  margin-top: ${SPACING.medium};
+`;
+
+const TextForgotPassword = styled(Text)`
+  cursor: pointer;
+  text-decoration: underline;
+`;
+
+const WrapperRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1px;
+`;
+
+const CreateAccountArea = styled.div`
+  display: flex;
+  flex-direct: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: ${SPACING.medium} ${SPACING.medium} 0 0;
 `;
 
 export default LoginForm;
