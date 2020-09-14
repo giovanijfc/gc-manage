@@ -24,4 +24,5 @@ export default {
   infoDark: "#0099CC",
   separator: "#F4F6FA",
   white: "#FFFFFF",
+  blueLight: "#ADD8E6",
 };

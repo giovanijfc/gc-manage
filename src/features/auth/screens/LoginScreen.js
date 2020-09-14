@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import ProjectDescription from "../components/ProjectDescription";
+import LoginForm from "../components/LoginForm";
 
 const LoginScreen = () => {
   return (
     <Container>
       <ProjectDescription />
+      <LoginForm />
     </Container>
   );
 };
