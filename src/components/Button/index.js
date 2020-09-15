@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import Text from "components/Text";
+import { getFontSize, getFontWeight } from "styles-guide/font";
 
 import COLORS from "styles-guide/COLORS";
 import SPACING from "styles-guide/SPACING";
@@ -15,17 +15,15 @@ const Button = ({
   typeStyle = "default",
   ...propsText
 }) => (
-  <Container typeStyle={typeStyle} {...propsContainer}>
+  <Container
+    size="regular"
+    color={typeStyle === "ghost" ? COLORS.primary : COLORS.white}
+    fontWeight="bold"
+    typeStyle={typeStyle}
+    {...propsContainer}
+  >
     {renderLeft}
-    <Text
-      style={{ cursor: "pointer" }}
-      size="regular"
-      color={typeStyle === "ghost" ? COLORS.primary : COLORS.white}
-      fontWeight="bold"
-      {...propsText}
-    >
-      {children}
-    </Text>
+    {children}
     {renderRight}
   </Container>
 );
@@ -36,9 +34,12 @@ const Container = styled.button`
   justify-content: center;
   padding: ${SPACING.small};
   background-color: ${COLORS.primary};
-  outline: 0;
+  font-size: ${({ size }) => getFontSize(size)};
+  color: ${({ color }) => color};
+  font-weight: ${({ fontWeight }) => getFontWeight(fontWeight)};
   border-radius: 2px;
   cursor: pointer;
+  outline: 0;
 
   &:hover {
     background-color: ${({ typeStyle }) =>

@@ -12,6 +12,7 @@ import {
   LabelInput,
   ErrorTextInput,
 } from "components/Input";
+import { ControlCheckBox, CheckBox, LabelCheckBox } from "components/CheckBox";
 
 import COLORS from "styles-guide/COLORS";
 import SPACING from "styles-guide/SPACING";
@@ -28,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = () => {
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -96,6 +97,17 @@ const LoginForm = () => {
           />
           <ErrorTextInput>{errors.password?.message}</ErrorTextInput>
         </ControlInput>
+
+        <ControlCheckBox style={{ marginBottom: "8px", marginTop: "8px" }}>
+          <CheckBox
+            onChange={(value) => {
+              setValue("rememberCredentials", value);
+            }}
+            ref={register}
+            name="rememberCredentials"
+          />
+          <LabelCheckBox>Lembrar-me</LabelCheckBox>
+        </ControlCheckBox>
 
         <Button
           propsContainer={{

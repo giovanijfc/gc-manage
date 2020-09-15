@@ -53,7 +53,7 @@ const Container = styled.div`
   height: 100%;
   background-size: cover;
   background: url(${BackgroundPreviewImage});
-  box-shadow: 4px 4px 4px ${COLORS.gray["500"]};
+  box-shadow: 4px 4px 4px #0e0e0e;
 `;
 
 const Overlay = styled.div`
@@ -63,7 +63,7 @@ const Overlay = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #44546599;
+  background-color: #0e0e0e99;
 `;
 
 const WrapperDescription = styled.div`
