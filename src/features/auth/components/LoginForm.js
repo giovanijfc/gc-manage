@@ -28,7 +28,7 @@ const schema = yup.object().shape({
     .required("Senha obrigatória"),
 });
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin, isLoading }) => {
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(schema),
   });
@@ -47,11 +47,7 @@ const LoginForm = () => {
         <Button typeStyle="ghost">CRIAR UMA CONTA</Button>
       </CreateAccountArea>
 
-      <StyledForm
-        onSubmit={handleSubmit((data) => {
-          console.log(data);
-        })}
-      >
+      <StyledForm onSubmit={handleSubmit(onLogin)}>
         <Text
           style={{ marginLeft: "-3px", marginBottom: "6px" }}
           size="high"
@@ -91,6 +87,7 @@ const LoginForm = () => {
           <Input
             ref={register}
             name="password"
+            type="password"
             size="small"
             placeholder="Digite sua senha..."
             renderLeft={<IoIosKey size="23px" color={COLORS.primary} />}
@@ -110,9 +107,8 @@ const LoginForm = () => {
         </ControlCheckBox>
 
         <Button
-          propsContainer={{
-            style: { width: "50%", marginTop: SPACING.small },
-          }}
+          style={{ width: "50%", marginTop: SPACING.small }}
+          isLoading={isLoading}
           typeStyle="default"
           type="submit"
         >
@@ -132,7 +128,7 @@ const Container = styled.div`
 
 const StyledForm = styled.form`
   flex: 1;
-  width: 28%;
+  width: 35%;
   display: flex;
   justify-content: center;
   flex-direction: column;

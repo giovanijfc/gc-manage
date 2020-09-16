@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { WaveLoading } from "react-loadingg";
 
 import { getFontSize, getFontWeight } from "styles-guide/font";
 
@@ -11,9 +12,8 @@ const Button = ({
   renderLeft,
   renderRight,
   children,
-  propsContainer,
   typeStyle = "default",
-  ...propsText
+  ...propsContainer
 }) => (
   <Container
     size="regular"
@@ -23,14 +23,23 @@ const Button = ({
     {...propsContainer}
   >
     {renderLeft}
-    {children}
+    <WrapperChildren>
+      {isLoading ? (
+        <WaveLoading
+          size="small"
+          color={typeStyle === "ghost" ? COLORS.primary : COLORS.white}
+          style={{ position: "relative" }}
+        />
+      ) : (
+        children
+      )}
+    </WrapperChildren>
     {renderRight}
   </Container>
 );
 
 const Container = styled.button`
   display: flex;
-  align-items: center;
   justify-content: center;
   padding: ${SPACING.small};
   background-color: ${COLORS.primary};
@@ -60,6 +69,13 @@ const Container = styled.button`
       border: 0,
     };
   }}
+`;
+
+const WrapperChildren = styled.div`
+  display: flex;
+  height: 28px;
+  align-self: center;
+  justify-self: center;
 `;
 
 export default Button;
