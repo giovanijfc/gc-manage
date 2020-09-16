@@ -33,7 +33,7 @@ const CreateAccountScreen = () => {
         id: userUid,
         name,
         nameFantasyEnterprise,
-        firstAccess: false,
+        firstAccess: true,
       });
 
       successResponse.user.sendEmailVerification();
