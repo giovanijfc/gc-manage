@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { auth } from "firebase";
+import { auth, firestore } from "firebase";
 
-import ProjectDescription from "../components/ProjectDescription";
-import LoginForm from "../components/LoginForm";
+import CreateAccountForm from "../components/CreateAccountForm";
 import ModalFeedbackRequest from "components/Modal/ModalFeedbackRequest";
+
+import WithButtonBack from "hoc/WithButtonBack";
 
 import getResponseMessageByCode from "utils/getResponseMessageByCode";
 
-const LoginScreen = () => {
+const CreateAccountScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messageResponse, setMessageResponse] = useState("");
 
@@ -16,14 +17,26 @@ const LoginScreen = () => {
     setMessageResponse("");
   };
 
-  const onLogin = async (dataForm) => {
+  const onCreateAccount = async (dataForm) => {
     setIsLoading(true);
-    const { email, password, rememberCredentials } = dataForm;
+    const { email, password, name, nameFantasyEnterprise } = dataForm;
 
     try {
-      localStorage.setItem("$$rememberCredentials", rememberCredentials);
-      await auth().signInWithEmailAndPassword(email, password);
+      const successResponse = await auth().createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      const userUid = successResponse.user.uid;
+
+      await firestore().collection("customers").doc(userUid).set({
+        id: userUid,
+        name,
+        nameFantasyEnterprise,
+        firstAccess: false,
+      });
     } catch (error) {
+      console.log(error);
       setMessageResponse(getResponseMessageByCode(error.code));
     } finally {
       setIsLoading(false);
@@ -32,8 +45,10 @@ const LoginScreen = () => {
 
   return (
     <Container>
-      <ProjectDescription />
-      <LoginForm isLoading={isLoading} onLogin={onLogin} />
+      <CreateAccountForm
+        isLoading={isLoading}
+        onCreateAccount={onCreateAccount}
+      />
 
       <ModalFeedbackRequest
         messageResponse={messageResponse}
@@ -50,4 +65,4 @@ export const Container = styled.div`
   flex-direction: row;
 `;
 
-export default LoginScreen;
+export default WithButtonBack(CreateAccountScreen);

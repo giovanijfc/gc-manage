@@ -65,6 +65,10 @@ const StyledInput = styled.input`
   outline: 0;
   border: 0;
 
+  &::-webkit-input-placeholder {
+    color: ${COLORS.gray["400"]};
+  }
+
   ${({ isFocused }) => {
     if (isFocused) {
       return {

@@ -28,5 +28,8 @@ function createWindow() {
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
+
+  // Usign DevTools Browser
+  // mainWindow.openDevTools();
 }
 app.on("ready", createWindow);

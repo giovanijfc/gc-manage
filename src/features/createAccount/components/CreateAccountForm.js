@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
@@ -13,13 +12,13 @@ import {
   LabelInput,
   ErrorTextInput,
 } from "components/Input";
-import { ControlCheckBox, CheckBox, LabelCheckBox } from "components/CheckBox";
 
 import COLORS from "styles-guide/COLORS";
 import SPACING from "styles-guide/SPACING";
 
 import { MdEmail } from "react-icons/md";
 import { IoIosKey } from "react-icons/io";
+import { BsFillPersonFill } from "react-icons/bs";
 
 const schema = yup.object().shape({
   email: yup.string().email("Email incorreto.").required("Email obrigatório."),
@@ -27,50 +26,60 @@ const schema = yup.object().shape({
     .string()
     .min(6, "Mínimo de 6 dígitos para a senha.")
     .required("Senha obrigatória"),
+  nameFantasyEnterprise: yup.string().required("Nome Fantasia obrigatório."),
+  name: yup.string().required("Nome obrigatório."),
 });
 
-const LoginForm = ({ onLogin, isLoading }) => {
-  const { register, handleSubmit, errors, setValue } = useForm({
+const CreateAccountForm = ({ onCreateAccount, isLoading }) => {
+  const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
-  const history = useHistory();
-
-  const onClickCreateAccountHandler = () => {
-    history.push("/create-account");
-  };
 
   return (
     <Container>
-      <CreateAccountArea>
-        <Text
-          style={{ marginRight: SPACING.small }}
-          size="small"
-          fontWeight="regular"
-          color={COLORS.gray["500"]}
-        >
-          Ainda não tem uma conta?
-        </Text>
-        <Button onClick={onClickCreateAccountHandler} typeStyle="ghost">
-          CRIAR UMA CONTA
-        </Button>
-      </CreateAccountArea>
-
-      <StyledForm onSubmit={handleSubmit(onLogin)}>
+      <StyledForm onSubmit={handleSubmit(onCreateAccount)}>
         <Text
           style={{ marginLeft: "-3px", marginBottom: "6px" }}
           size="high"
           fontWeight="bold"
         >
-          Entre em GCMS
+          Crie sua conta
         </Text>
         <Text color={COLORS.gray["500"]} size="small" fontWeight="regular">
-          Insira seus dados de login abaixo.
+          Criar uma conta no GCMS é gratis. Insira seus dados para criar sua
+          conta.
         </Text>
 
         <ControlInput
           style={{ marginTop: SPACING.medium }}
-          isValid={!errors.email?.message}
+          isValid={!errors.name?.message}
         >
+          <LabelInput>NOME COMPLETO</LabelInput>
+          <Input
+            ref={register}
+            name="name"
+            size="small"
+            placeholder="Nome Sobrenome"
+            renderLeft={<BsFillPersonFill size="23px" color={COLORS.primary} />}
+          />
+          <ErrorTextInput>{errors.name?.message}</ErrorTextInput>
+        </ControlInput>
+
+        <ControlInput isValid={!errors.nameFantasyEnterprise?.message}>
+          <LabelInput>NOME FANTASIA DO NÉGOCIO</LabelInput>
+          <Input
+            ref={register}
+            name="nameFantasyEnterprise"
+            size="small"
+            placeholder="Padaria Estrela"
+            renderLeft={<BsFillPersonFill size="23px" color={COLORS.primary} />}
+          />
+          <ErrorTextInput>
+            {errors.nameFantasyEnterprise?.message}
+          </ErrorTextInput>
+        </ControlInput>
+
+        <ControlInput isValid={!errors.email?.message}>
           <LabelInput>EMAIL</LabelInput>
           <Input
             ref={register}
@@ -86,12 +95,7 @@ const LoginForm = ({ onLogin, isLoading }) => {
           style={{ marginTop: "3px" }}
           isValid={!errors.password?.message}
         >
-          <WrapperRow>
-            <LabelInput>SENHA</LabelInput>
-            <TextForgotPassword fontWeight="regular" color="black" size="small">
-              Esqueceu sua senha?
-            </TextForgotPassword>
-          </WrapperRow>
+          <LabelInput>PASSWORD</LabelInput>
           <Input
             ref={register}
             name="password"
@@ -103,24 +107,13 @@ const LoginForm = ({ onLogin, isLoading }) => {
           <ErrorTextInput>{errors.password?.message}</ErrorTextInput>
         </ControlInput>
 
-        <ControlCheckBox style={{ marginBottom: "8px", marginTop: "8px" }}>
-          <CheckBox
-            onChange={(value) => {
-              setValue("rememberCredentials", value);
-            }}
-            ref={register}
-            name="rememberCredentials"
-          />
-          <LabelCheckBox>Lembrar-me</LabelCheckBox>
-        </ControlCheckBox>
-
         <Button
           style={{ width: "50%", marginTop: SPACING.small }}
           isLoading={isLoading}
           typeStyle="default"
           type="submit"
         >
-          Entrar
+          Criar conta
         </Button>
       </StyledForm>
     </Container>
@@ -131,36 +124,14 @@ const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 80px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledForm = styled.form`
-  flex: 1;
-  width: 35%;
   display: flex;
-  justify-content: center;
+  width: 23%;
   flex-direction: column;
 `;
 
-const TextForgotPassword = styled(Text)`
-  cursor: pointer;
-  text-decoration: underline;
-`;
-
-const WrapperRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1px;
-`;
-
-const CreateAccountArea = styled.div`
-  display: flex;
-  flex-direct: row;
-  justify-content: flex-end;
-  align-items: center;
-  margin: ${SPACING.medium} ${SPACING.medium} 0 0;
-`;
-
-export default LoginForm;
+export default CreateAccountForm;
