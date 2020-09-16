@@ -7,46 +7,45 @@ import COLORS from "styles-guide/COLORS";
 import SPACING from "styles-guide/SPACING";
 
 import BackgroundPreviewImage from "assets/imgs/background-preview.jpg";
+import Logo from "assets/logos/logo.png";
 
-const ProjectDescription = () => {
-  return (
-    <Container>
-      <Overlay>
-        <ImageLogo src={require("assets/logos/logo.png")} />
-        <Text size="extraMedium" fontWeight="bold" color={COLORS.white}>
-          GCMS
-        </Text>
+const ProjectDescription = () => (
+  <Container>
+    <Overlay>
+      <ImageLogo src={Logo} />
+      <Text size="extraMedium" fontWeight="bold" color={COLORS.white}>
+        GCMS
+      </Text>
+      <Text
+        style={{ fontSize: "1em", marginTop: "6px" }}
+        fontWeight="bold"
+        color={COLORS.white}
+      >
+        GC Management System
+      </Text>
+
+      <WrapperDescription>
         <Text
-          style={{ fontSize: "1em", marginTop: "6px" }}
-          fontWeight="bold"
+          style={{ marginTop: "6px" }}
+          size="extraRegular"
+          fontWeight="light"
           color={COLORS.white}
         >
-          GC Management System
+          Um aplicativo de gerenciamento poderoso, mas fácil de usar em qualquer
+          négocio!
         </Text>
+      </WrapperDescription>
 
-        <WrapperDescription>
-          <Text
-            style={{ marginTop: "6px" }}
-            size="extraRegular"
-            fontWeight="light"
-            color={COLORS.white}
-          >
-            Um aplicativo de gerenciamento poderoso, mas fácil de usar em
-            qualquer négocio!
-          </Text>
-        </WrapperDescription>
-
-        <Text
-          style={{ position: "absolute", bottom: 20 }}
-          size="small"
-          color={COLORS.gray["400"]}
-        >
-          Versão 1.12.0
-        </Text>
-      </Overlay>
-    </Container>
-  );
-};
+      <Text
+        style={{ position: "absolute", bottom: 20 }}
+        size="small"
+        color={COLORS.gray["400"]}
+      >
+        Versão 1.12.0
+      </Text>
+    </Overlay>
+  </Container>
+);
 
 const Container = styled.div`
   width: 31%;
