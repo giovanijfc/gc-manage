@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -30,10 +30,26 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = ({ onLogin, isLoading }) => {
+  const rememberCredentials =
+    localStorage.getItem("$$rememberCredentials") === "true";
+
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(schema),
   });
   const history = useHistory();
+
+  useEffect(() => {
+    if (rememberCredentials) {
+      setValue("rememberCredentials", true);
+
+      const { email, password } = JSON.parse(
+        localStorage.getItem("$$credentials")
+      );
+
+      setValue("email", email);
+      setValue("password", password);
+    }
+  }, [rememberCredentials, setValue]);
 
   const onClickCreateAccountHandler = () => {
     history.push("/create-account");
@@ -103,7 +119,10 @@ const LoginForm = ({ onLogin, isLoading }) => {
           <ErrorTextInput>{errors.password?.message}</ErrorTextInput>
         </ControlInput>
 
-        <ControlCheckBox style={{ marginBottom: "8px", marginTop: "8px" }}>
+        <ControlCheckBox
+          initialChecked={rememberCredentials}
+          style={{ marginBottom: "8px", marginTop: "8px" }}
+        >
           <CheckBox
             onChange={(value) => {
               setValue("rememberCredentials", value);

@@ -22,6 +22,10 @@ const LoginScreen = () => {
 
     try {
       localStorage.setItem("$$rememberCredentials", rememberCredentials);
+      localStorage.setItem(
+        "$$credentials",
+        JSON.stringify({ email, password })
+      );
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
       setMessageResponse(getResponseMessageByCode(error.code));

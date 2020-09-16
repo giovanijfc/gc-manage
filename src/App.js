@@ -3,8 +3,10 @@ import { auth } from "firebase";
 
 import GuestNavigator from "navigators/GuestNavigator";
 
+import Loader from "components/Loader";
+
 const App = () => {
-  const [hasUserLogged, setHasUserLogged] = useState(false);
+  const [hasUserLogged, setHasUserLogged] = useState(undefined);
 
   useEffect(() => {
     const authStateListener = auth().onAuthStateChanged((userLogged) => {
@@ -16,7 +18,15 @@ const App = () => {
     };
   }, []);
 
-  return hasUserLogged ? <div>já logado</div> : <GuestNavigator />;
+  if (hasUserLogged === undefined) {
+    return <Loader />;
+  }
+
+  return hasUserLogged ? (
+    <div onClick={() => auth().signOut()}>já logado</div>
+  ) : (
+    <GuestNavigator />
+  );
 };
 
 export default App;
