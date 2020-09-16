@@ -55,6 +55,10 @@ const LoginForm = ({ onLogin, isLoading }) => {
     history.push("/create-account");
   };
 
+  const onClickForgotPasswordHandler = () => {
+    history.push("/change-password");
+  };
+
   return (
     <Container>
       <CreateAccountArea>
@@ -104,7 +108,12 @@ const LoginForm = ({ onLogin, isLoading }) => {
         >
           <WrapperRow>
             <LabelInput>SENHA</LabelInput>
-            <TextForgotPassword fontWeight="regular" color="black" size="small">
+            <TextForgotPassword
+              onClick={onClickForgotPasswordHandler}
+              fontWeight="regular"
+              color="black"
+              size="small"
+            >
               Esqueceu sua senha?
             </TextForgotPassword>
           </WrapperRow>

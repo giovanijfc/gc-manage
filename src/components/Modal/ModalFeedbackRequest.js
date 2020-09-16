@@ -20,6 +20,7 @@ const ModalFeedbackRequest = ({
       alignItems: "center",
       justifyContent: "center",
       minWidth: "300px",
+      maxWidth: "600px",
       padding: SPACING.high,
     }}
     onRequestClose={handleCloseModal}

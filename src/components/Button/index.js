@@ -73,7 +73,7 @@ const Container = styled.button`
 
 const WrapperChildren = styled.div`
   display: flex;
-  height: 28px;
+  min-height: 28px;
   align-self: center;
   justify-self: center;
 `;

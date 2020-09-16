@@ -35,8 +35,9 @@ const CreateAccountScreen = () => {
         nameFantasyEnterprise,
         firstAccess: false,
       });
+
+      successResponse.user.sendEmailVerification();
     } catch (error) {
-      console.log(error);
       setMessageResponse(getResponseMessageByCode(error.code));
     } finally {
       setIsLoading(false);
