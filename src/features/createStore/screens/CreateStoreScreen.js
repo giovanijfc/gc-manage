@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { auth, firestore } from "firebase";
 
-import CreateAccountForm from "../components/CreateAccountForm";
+import CreateAccountForm from "../components/CreateStoreForm";
 import ModalFeedbackRequest from "components/Modal/ModalFeedbackRequest";
 
 import WithButtonBack from "hoc/WithButtonBack";
 
 import getResponseMessageByCode from "utils/getResponseMessageByCode";
 
-const CreateAccountScreen = () => {
+const CreateStoreScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messageResponse, setMessageResponse] = useState("");
 
@@ -17,27 +17,11 @@ const CreateAccountScreen = () => {
     setMessageResponse("");
   };
 
-  const onCreateAccount = async (dataForm) => {
+  const onCreateStore = async (dataForm) => {
     setIsLoading(true);
-    const { email, password, name, nameFantasyEnterprise } = dataForm;
+    const { name, employees } = dataForm;
 
     try {
-      const successResponse = await auth().createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      const userUid = successResponse.user.uid;
-
-      await firestore().collection("customers").doc(userUid).set({
-        id: userUid,
-        name,
-        nameFantasyEnterprise,
-        firstAccess: true,
-        role: "adm",
-      });
-
-      successResponse.user.sendEmailVerification();
     } catch (error) {
       setMessageResponse(getResponseMessageByCode(error.code));
     } finally {
@@ -47,10 +31,7 @@ const CreateAccountScreen = () => {
 
   return (
     <Container>
-      <CreateAccountForm
-        isLoading={isLoading}
-        onCreateAccount={onCreateAccount}
-      />
+      <CreateAccountForm isLoading={isLoading} onCreateStore={onCreateStore} />
 
       <ModalFeedbackRequest
         messageResponse={messageResponse}
@@ -67,4 +48,4 @@ export const Container = styled.div`
   flex-direction: row;
 `;
 
-export default WithButtonBack(CreateAccountScreen);
+export default WithButtonBack(CreateStoreScreen);
