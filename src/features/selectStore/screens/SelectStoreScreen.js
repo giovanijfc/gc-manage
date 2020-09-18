@@ -3,10 +3,14 @@ import styled from "styled-components";
 
 import Header from "../components/Header";
 
+import ItemStore from "components/ItemStore";
+
 const SelectStoreScreen = () => {
   return (
     <Container>
       <Header />
+
+      <ItemStore data={{ name: "teste" }} />
     </Container>
   );
 };
