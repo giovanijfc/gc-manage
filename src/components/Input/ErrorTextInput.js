@@ -40,14 +40,17 @@ const WrapperAnimation = styled.div`
 `;
 
 const transitionStyles = {
-  entering: { opacity: 0, transform: "translateY(-30px)" },
+  entering: { display: "flex", opacity: 0, transform: "translateY(-30px)" },
   entered: {
+    display: "flex",
     opacity: 1,
     transform: "translateY(0px)",
     transition: "opacity 200ms, transform 200ms",
   },
-  exiting: { opacity: 1 },
+  exiting: { height: 0, width: 0, opacity: 1 },
   exited: {
+    height: 0,
+    width: 0,
     opacity: 0,
     transform: "translateY(-30px)",
   },

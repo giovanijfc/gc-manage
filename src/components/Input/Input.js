@@ -37,7 +37,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 0 12px 0 12px;
   background-color: ${COLORS.gray["200"]};
   border: 2px solid ${COLORS.gray["300"]};
   border-radius: 2px;
@@ -56,14 +56,14 @@ const Container = styled.div`
 
 const StyledInput = styled.input`
   flex: 1;
-  margin-left: 7px;
-  margin-right: 7px;
+  padding: 14px;
   font-size: ${({ size }) => getFontSize(size)};
   color: ${({ color }) => color};
   font-weight: ${({ fontWeight }) => getFontWeight(fontWeight)};
   background-color: ${COLORS.gray["200"]};
   outline: 0;
   border: 0;
+  display: 3;
 
   &::-webkit-input-placeholder {
     color: ${COLORS.gray["400"]};

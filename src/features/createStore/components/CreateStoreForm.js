@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers";
 import * as yup from "yup";
+
+import useCreateStore from "hooks/useCreateStore";
 
 import Button from "components/Button";
 import Text from "components/Text";
@@ -28,43 +29,19 @@ const schema = yup.object().shape({
 });
 
 const CreateStoreForm = ({ onCreateStore, isLoading }) => {
-  const [employees, setEmployees] = useState([{ id: uuidv4(), email: "" }]);
-
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onClickAddEmployeeHandler = () => {
-    setEmployees((prevEmployees) => [
-      ...prevEmployees,
-      { id: uuidv4(), email: "" },
-    ]);
-  };
-
-  const onClickRemoveEmployeeHandler = (idToRemove) => {
-    setEmployees((prevEmployees) =>
-      prevEmployees.filter(({ id }) => id !== idToRemove)
-    );
-  };
-
-  const onChangeEmployeeEmailHandler = (idToUpdate, newEmail) => {
-    setEmployees((prevEmployees) =>
-      prevEmployees.map((employee) => {
-        if (employee.id === idToUpdate) {
-          return {
-            ...employee,
-            email: newEmail,
-          };
-        }
-
-        return employee;
-      })
-    );
-  };
+  const {
+    employees,
+    onClickAddEmployeeHandler,
+    onClickRemoveEmployeeHandler,
+    onChangeEmployeeEmailHandler,
+  } = useCreateStore();
 
   const onSubmitHandler = (data) => {
     const hasIncorrectEmail = employees.find(({ email }) =>
-      email.length > 0 ? !validateEmail(email) : false
+      email.length > 0 ? !validateEmail(email) : true
     );
 
     if (hasIncorrectEmail) {
@@ -109,21 +86,22 @@ const CreateStoreForm = ({ onCreateStore, isLoading }) => {
             alignSelf: "flex-end",
             justifyContent: "center",
             alignItems: "center",
-            width: "60px",
             height: "40px",
             backgroundColor: COLORS.success,
           }}
           type="button"
           onClick={onClickAddEmployeeHandler}
         >
-          <IoMdPersonAdd size="23px" color={COLORS.white} />
+          <IoMdPersonAdd
+            style={{ marginRight: "5px" }}
+            size="23px"
+            color={COLORS.white}
+          />
+          Funcionários
         </Button>
 
         {employees.map(({ id, email }, index) => (
-          <ControlInput
-            key={id}
-            isValid={email.length > 0 ? validateEmail(email) : true}
-          >
+          <ControlInput key={id} isValid={validateEmail(email)}>
             <LabelInput>FUNCIONARIO {1 + index}</LabelInput>
             <Input
               ref={register}
@@ -136,13 +114,12 @@ const CreateStoreForm = ({ onCreateStore, isLoading }) => {
               placeholder={`Email do funcionário ${1 + index}`}
               renderLeft={<MdEmail size="23px" color={COLORS.primary} />}
               renderRight={
-                index > 0 && (
-                  <IoMdRemoveCircle
-                    onClick={() => onClickRemoveEmployeeHandler(id)}
-                    color={COLORS.error}
-                    size="23px"
-                  />
-                )
+                <StyledIconRemoveEmployee
+                  onClick={() => onClickRemoveEmployeeHandler(id)}
+                  color={COLORS.error}
+                  size="23px"
+                  style={{}}
+                />
               }
             />
             <ErrorTextInput>Email incorreto.</ErrorTextInput>
@@ -174,6 +151,12 @@ const StyledForm = styled.form`
   display: flex;
   width: 23%;
   flex-direction: column;
+`;
+
+const StyledIconRemoveEmployee = styled(IoMdRemoveCircle)`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default CreateStoreForm;
