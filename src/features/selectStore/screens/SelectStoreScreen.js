@@ -2,15 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import Header from "../components/Header";
-
-import ItemStore from "components/ItemStore";
+import ListStores from "../components/ListStores";
 
 const SelectStoreScreen = () => {
   return (
     <Container>
       <Header />
-
-      <ItemStore data={{ name: "teste" }} />
+      <ListStores />
     </Container>
   );
 };
@@ -18,6 +16,7 @@ const SelectStoreScreen = () => {
 const Container = styled.div`
   flex: 1;
   display: flex;
+  flex-direction: column;
   padding: 100px;
 `;
 

@@ -7,6 +7,8 @@ import Button from "components/Button";
 
 import StoreContext from "contexts/StoreContext";
 
+import COLORS from "styles-guide/COLORS";
+
 import { MdAddCircle } from "react-icons/md";
 
 const Header = () => {
@@ -19,7 +21,9 @@ const Header = () => {
 
   return (
     <Container>
-      <Text fontWeight="semiBold">Bem vindo {userLogged?.name || "..."}</Text>
+      <Text color={COLORS.primary} fontWeight="regular">
+        Bem vindo {userLogged?.name || "..."}
+      </Text>
 
       <Button
         onClick={onClickAddStoreHandler}
