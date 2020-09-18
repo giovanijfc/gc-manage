@@ -101,7 +101,11 @@ const CreateStoreForm = ({ onCreateStore, isLoading }) => {
         </Button>
 
         {employees.map(({ id, email }, index) => (
-          <ControlInput key={id} isValid={validateEmail(email)}>
+          <ControlInput
+            style={{ marginTop: "6px" }}
+            key={id}
+            isValid={validateEmail(email)}
+          >
             <LabelInput>FUNCIONARIO {1 + index}</LabelInput>
             <Input
               ref={register}
@@ -127,7 +131,11 @@ const CreateStoreForm = ({ onCreateStore, isLoading }) => {
         ))}
 
         <Button
-          style={{ width: "50%", marginTop: SPACING.small }}
+          style={{
+            width: "50%",
+            marginTop: SPACING.small,
+            marginBottom: SPACING.medium,
+          }}
           isLoading={isLoading}
           typeStyle="default"
           type="submit"
@@ -140,17 +148,19 @@ const CreateStoreForm = ({ onCreateStore, isLoading }) => {
 };
 
 const Container = styled.div`
-  flex: 1;
   display: flex;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   width: 23%;
+  height: 100%;
   flex-direction: column;
+  margin: 50px;
 `;
 
 const StyledIconRemoveEmployee = styled(IoMdRemoveCircle)`

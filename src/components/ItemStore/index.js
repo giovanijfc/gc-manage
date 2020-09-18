@@ -30,6 +30,7 @@ const StyledContainer = styled.div`
   background-color: ${COLORS.backgroundLight};
   border-radius: 4px;
   cursor: pointer;
+  padding: 6px;
   transition: transform 0.3s;
   box-shadow: 6px 8px 6px ${COLORS.primary};
 
