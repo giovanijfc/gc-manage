@@ -12,6 +12,8 @@ import COLORS from "styles-guide/COLORS";
 
 import { MdAddCircle } from "react-icons/md";
 
+import ROLE from "constants/roles";
+
 const Header = () => {
   const { userLogged } = useContext(StoreContext);
   const history = useHistory();
@@ -39,16 +41,18 @@ const Header = () => {
         Sair
       </Text>
 
-      <Button
-        onClick={onClickAddStoreHandler}
-        size="extraRegular"
-        typeStyle="ghost"
-      >
-        <WrapperCenterButton>
-          <MdAddCircle style={{ marginRight: "5px" }} size="32px" />
-          Adicionar Loja
-        </WrapperCenterButton>
-      </Button>
+      {userLogged?.role === ROLE.ADM && (
+        <Button
+          onClick={onClickAddStoreHandler}
+          size="extraRegular"
+          typeStyle="ghost"
+        >
+          <WrapperCenterButton>
+            <MdAddCircle style={{ marginRight: "5px" }} size="32px" />
+            Adicionar Loja
+          </WrapperCenterButton>
+        </Button>
+      )}
     </Container>
   );
 };

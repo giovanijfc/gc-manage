@@ -1,9 +1,9 @@
-import firebase from "firebase";
-
-import firebaseConfig from "constants/firebaseConfig";
-
-export const createEmployees = async (emails, temporallyPassword) => {
-  const secondaryApp = firebase.initializeApp(firebaseConfig, "SecondaryApp");
+export const createEmployees = async (
+  emails,
+  temporallyPassword,
+  secondaryApp,
+  userIdAdm
+) => {
   const customersRef = secondaryApp.firestore().collection("customers");
 
   await Promise.all(
@@ -21,10 +21,9 @@ export const createEmployees = async (emails, temporallyPassword) => {
           name: email,
           firstAccess: true,
           role: "employee",
+          idEnterprise: userIdAdm,
         });
       }
     })
   );
-
-  await secondaryApp.delete();
 };

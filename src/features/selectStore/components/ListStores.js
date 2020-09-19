@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useLayoutEffect, useContext, useState } from "react";
 import styled from "styled-components";
+
+import StoreContext from "contexts/StoreContext";
 
 import ItemStore from "components/ItemStore";
 import Text from "components/Text";
+
+import { getAllStoresFromUser } from "services/stores";
 
 import COLORS from "styles-guide/COLORS";
 import SPACING from "styles-guide/SPACING";
 
 const ListStores = () => {
+  const [stores, setStores] = useState([]);
+  const { userLogged } = useContext(StoreContext);
+
+  useLayoutEffect(() => {
+    (async () => {
+      if (userLogged) {
+        const storesUpdate = await getAllStoresFromUser(userLogged);
+
+        setStores(storesUpdate);
+      }
+    })();
+  }, [userLogged]);
+
   return (
     <>
       <Text
@@ -22,17 +39,9 @@ const ListStores = () => {
         Selecione uma loja para gerenciar
       </Text>
       <StyledWrapperListStores>
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
-        <StyledItemStore data={{ name: "Loja 1" }} />
+        {stores.map((store, index) => (
+          <StyledItemStore key={index} data={store} />
+        ))}
       </StyledWrapperListStores>
     </>
   );

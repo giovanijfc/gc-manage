@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import firebase, { auth } from "firebase";
 
 import { createEmployees } from "services/employees";
 import { createOrUpdateStore } from "services/stores";
@@ -13,6 +14,8 @@ import ModalFeedbackRequest from "components/Modal/ModalFeedbackRequest";
 import WithButtonBack from "hoc/WithButtonBack";
 
 import getResponseMessageByCode from "utils/getResponseMessageByCode";
+
+import firebaseConfig from "constants/firebaseConfig";
 
 const CreateStoreScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +41,8 @@ const CreateStoreScreen = () => {
         employeesEmails: emails,
       },
     ];
+    const secondaryApp = firebase.initializeApp(firebaseConfig, "SecondaryApp");
+    const userIdAdm = auth().currentUser.uid;
 
     try {
       await Promise.all(
@@ -53,7 +58,12 @@ const CreateStoreScreen = () => {
       );
 
       await createOrUpdateStore(stores);
-      await createEmployees(emails, temporallyPassword);
+      await createEmployees(
+        emails,
+        temporallyPassword,
+        secondaryApp,
+        userIdAdm
+      );
 
       let message = `Loja criada com sucesso. ATENÇÃO caso tenha cadastrado emails, todas as senhas dos emails foram criadas com esses digitos "${temporallyPassword}", não esqueça de anotalas...`;
 
@@ -72,6 +82,7 @@ const CreateStoreScreen = () => {
       console.log(error);
     } finally {
       setIsLoading(false);
+      secondaryApp.delete();
     }
   };
 

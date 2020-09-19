@@ -12,7 +12,9 @@ export default function useStore(hasUserLogged) {
         const userLoggedData = await getUserLogged();
         setUserLogged(userLoggedData);
 
-        document.title = `GCMS - ${userLoggedData.nameFantasyEnterprise}`;
+        document.title = `Bem vindo ${
+          userLoggedData.nameFantasyEnterprise || ""
+        }`;
       }
     })();
   }, [hasUserLogged]);
