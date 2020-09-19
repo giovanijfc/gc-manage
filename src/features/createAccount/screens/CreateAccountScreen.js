@@ -35,6 +35,7 @@ const CreateAccountScreen = () => {
         nameFantasyEnterprise,
         firstAccess: true,
         role: "adm",
+        email,
       });
 
       successResponse.user.sendEmailVerification();

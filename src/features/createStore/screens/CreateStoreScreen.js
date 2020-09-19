@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { createEmployees } from "services/employees";
 import { createOrUpdateStore } from "services/stores";
+import { checkHaveDuplicationEmail } from "services/user";
 
 import CreateAccountForm from "../components/CreateStoreForm";
 import ModalFeedbackRequest from "components/Modal/ModalFeedbackRequest";
@@ -39,10 +40,22 @@ const CreateStoreScreen = () => {
     ];
 
     try {
+      await Promise.all(
+        emails.map(async (email) => {
+          const emailsDuplicated = await checkHaveDuplicationEmail(email);
+
+          if (emailsDuplicated.length > 0) {
+            throw new Error(
+              `O email "${email}" já esta cadastrado na base de dados, por favor tente utilizar outro.`
+            );
+          }
+        })
+      );
+
       await createOrUpdateStore(store);
       await createEmployees(emails, temporallyPassword);
 
-      let message = `Loja criada com sucesso. ATENÇÃO caso tenha cadastrados emails, todas as senhas dos emails foram criadas com esses digitos "${temporallyPassword}", não esqueça de anotalas...`;
+      let message = `Loja criada com sucesso. ATENÇÃO caso tenha cadastrado emails, todas as senhas dos emails foram criadas com esses digitos "${temporallyPassword}", não esqueça de anotalas...`;
 
       if (emails.length === 0) {
         message = "Loja criada com sucesso.";
@@ -50,7 +63,13 @@ const CreateStoreScreen = () => {
 
       setMessageResponse(message);
     } catch (error) {
+      if (error?.message?.includes("O email")) {
+        return setMessageResponse(error.message);
+      }
+
       setMessageResponse(getResponseMessageByCode(error.code));
+
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

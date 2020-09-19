@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { auth } from "firebase";
 
 import Text from "components/Text";
 import Button from "components/Button";
@@ -19,10 +20,23 @@ const Header = () => {
     history.push("/create-store");
   };
 
+  const signOut = () => {
+    auth().signOut();
+  };
+
   return (
     <Container>
       <Text color={COLORS.primary} fontWeight="regular">
         Bem vindo {userLogged?.name || "..."}
+      </Text>
+
+      <Text
+        onClick={signOut}
+        color={COLORS.info}
+        size="extraRegular"
+        fontWeight="regular"
+      >
+        Sair
       </Text>
 
       <Button
@@ -43,6 +57,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const WrapperCenterButton = styled.div`
