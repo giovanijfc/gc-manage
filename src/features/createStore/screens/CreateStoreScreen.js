@@ -32,7 +32,7 @@ const CreateStoreScreen = () => {
     const { name, employees } = dataForm;
     const temporallyPassword = uuidv4().substring(0, 6);
     const emails = employees.map(({ email }) => email);
-    const store = [
+    const stores = [
       {
         name,
         employeesEmails: emails,
@@ -52,7 +52,7 @@ const CreateStoreScreen = () => {
         })
       );
 
-      await createOrUpdateStore(store);
+      await createOrUpdateStore(stores);
       await createEmployees(emails, temporallyPassword);
 
       let message = `Loja criada com sucesso. ATENÇÃO caso tenha cadastrado emails, todas as senhas dos emails foram criadas com esses digitos "${temporallyPassword}", não esqueça de anotalas...`;
